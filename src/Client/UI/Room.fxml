@@ -61,21 +61,26 @@
                         <Font name="Arial Bold" size="32.0" />
                      </font>
                   </Label>
-                  <Label fx:id="email" layoutX="180.0" layoutY="160.0" opacity="0.0" prefHeight="37.0" textFill="#f2f2f2">
+                  <Label fx:id="email" layoutX="150.0" layoutY="160.0" opacity="0.0" prefHeight="37.0" textFill="#f2f2f2">
                      <font>
                         <Font name="Arial Bold" size="32.0" />
                      </font>
                   </Label>
-                  <Label fx:id="phoneNo" layoutX="180.0" layoutY="220.0" prefHeight="37.0" textFill="#f2f2f2">
+                  <Label fx:id="phoneNo" layoutX="150.0" layoutY="220.0" prefHeight="37.0" textFill="#f2f2f2">
                      <font>
                         <Font name="Arial Bold" size="32.0" />
                      </font>
                   </Label>
-                  <Label fx:id="gender" layoutX="180.0" layoutY="280.0" prefHeight="37.0" textFill="#f2f2f2">
+                  <Label fx:id="gender" layoutX="200.0" layoutY="280.0" prefHeight="37.0" textFill="#f2f2f2">
                      <font>
                         <Font name="Arial Bold" size="32.0" />
                      </font>
                   </Label>
+                  <ImageView fx:id="genderImage" fitHeight="48.0" fitWidth="48.0" layoutX="143.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Assets/male.png" />
+                     </image>
+                  </ImageView>
                   <ImageView fx:id="proImage" fitHeight="240.0" fitWidth="240.0" layoutX="546.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../Assets/Avatar/7.png" />

@@ -67,6 +67,8 @@ public class Room extends Thread implements Initializable {
     @FXML
     public ImageView proImage;
     @FXML
+    private ImageView genderImage;
+    @FXML
     public Circle showProPic;
     @FXML
     private TextFlow testRoom;
@@ -192,6 +194,13 @@ public class Room extends Thread implements Initializable {
                 email.setOpacity(1);
                 phoneNo.setText(user.phone);
                 gender.setText(user.gender);
+                Image image;
+                if (user.gender.equals("Male")) {
+                    image = new Image("Assets/male.png");
+                } else {
+                    image = new Image("Assets/female.png");
+                }
+                genderImage.setImage(image);
             }
         }
     }
