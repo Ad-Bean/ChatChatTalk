@@ -260,6 +260,14 @@ public class Room extends Thread implements Initializable {
         if (saveControl) {
             try {
                 BufferedImage bufferedImage = ImageIO.read(filePath);
+                for(User user : users){
+                    if(user.nickName.equals(Controller.username)){
+                        String[] temp = fileChoosePath.getText().split("Avatar\\\\");
+                        user.icon = temp[temp.length - 1];
+                        UserDataService.saveAllRegisteredUsers(users);
+                        break;
+                    }
+                }
                 Image image = SwingFXUtils.toFXImage(bufferedImage, null);
                 proImage.setImage(image);
                 showProPic.setFill(new ImagePattern(image));
@@ -274,10 +282,15 @@ public class Room extends Thread implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         showProPic.setStroke(Color.valueOf("#90a4ae"));
-        Image image;
-        Random rand = new Random();
-        int randomAvatar = rand.nextInt(32) + 1;
-        image = new Image("Assets/Avatar/" + randomAvatar + ".png", false);
+        Image image = new Image("Assets/Avatar/1.png", false);
+        String path = "Assets/Avatar/";
+        for(User user : users){
+            if(user.nickName.equals(Controller.username) && user.icon != null){
+                System.out.println(user.icon);
+                image = new Image(path + user.icon, false);
+                break;
+            }
+        }
         proImage.setImage(image);
         showProPic.setFill(new ImagePattern(image));
         clientName.setText(Controller.nickname);

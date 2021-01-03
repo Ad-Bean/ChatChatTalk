@@ -71,6 +71,7 @@ public class Controller {
             if (checkUser(regUsername.getText())) {
                 if (checkEmail(regEmail.getText())) {
                     User newUser = new User();
+                    newUser.icon = "1.png";
                     newUser.username = regUsername.getText();
                     newUser.password = regPass.getText();
                     newUser.email = regEmail.getText();
@@ -192,13 +193,26 @@ public class Controller {
         }
     }
 
+    public void logout(){
+        for(User logged : loggedInUser){
+            if(logged.nickName.equals(username)){
+                loggedInUser.remove(logged);
+                break;
+            }
+        }
+        UserDataService.saveAllOnlineUsers(loggedInUser);
+    }
+
     public void changeWindow() {
         try {
             Stage stage = (Stage) userName.getScene().getWindow();
             Parent root = FXMLLoader.load(this.getClass().getResource("../UI/Room.fxml"));
             stage.setScene(new Scene(root, 980, 800));
             stage.setTitle("ChatChatTalk: " + username + "");
-            stage.setOnCloseRequest(event -> System.exit(0));
+            stage.setOnCloseRequest(event -> {
+                logout();
+                System.exit(0);
+            });
             stage.setResizable(false);
         } catch (IOException e) {
             e.printStackTrace();
