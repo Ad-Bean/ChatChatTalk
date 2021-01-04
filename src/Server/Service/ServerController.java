@@ -55,19 +55,24 @@ public class ServerController {
         if (event.getSource() == exportBtn) {
             System.out.println("Exporting user data...");
             try{
-                BufferedWriter out = new BufferedWriter(new FileWriter("RegisterUsers.txt"));
+                BufferedWriter out = new BufferedWriter(new FileWriter("RegisterUsers.JSON"));
                 ResultSet resultSet = MySqlFunction.getAllRegisterUsers();
                 String users = new String();
+                users += "[\n";
                 try {
                     while (resultSet.next()) {
-                        users += resultSet.getString("icon") + ", ";
-                        users += resultSet.getString("nickName") + ", ";
-                        users += resultSet.getString("username") + ", ";
-                        users += resultSet.getString("password") + ", ";
-                        users += resultSet.getString("email") + ", ";
-                        users += resultSet.getString("gender") + ", ";
-                        users += resultSet.getString("phone") + "\n";
+                        users += "\t{\n";
+                        users += "\t\t\"icon\":\"" + resultSet.getString("icon") + "\",\n";
+                        users += "\t\t\"nickName\":\"" + resultSet.getString("nickName") + "\",\n";
+                        users += "\t\t\"username\":\"" + resultSet.getString("username") + "\",\n";
+                        users += "\t\t\"password\":\"" + resultSet.getString("password") + "\",\n";
+                        users += "\t\t\"email\":\"" + resultSet.getString("email") + "\",\n";
+                        users += "\t\t\"gender\":\"" + resultSet.getString("gender") + "\",\n";
+                        users += "\t\t\"phone\":\"" + resultSet.getString("phone") + "\"\n";
+                        users += "\t},\n";
                     }
+                    users = users.substring(0, users.length() - 2);
+                    users += "\n]";
                 } catch (SQLException e){
                     e.printStackTrace();
                 }
