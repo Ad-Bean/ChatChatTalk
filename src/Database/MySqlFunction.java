@@ -91,4 +91,16 @@ public class MySqlFunction {
             e.printStackTrace();
         }
     }
+
+    public static ResultSet getAllRegisterUsers(){
+        ResultSet resultSet;
+        try{
+            String sql = "SELECT * FROM user_info";
+            resultSet = MySqlConnection.statement.executeQuery(sql);
+            return resultSet;
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
