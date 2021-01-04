@@ -144,10 +144,6 @@ public class Room extends Thread implements Initializable {
                     } catch (SQLException e){
                         e.printStackTrace();
                     }
-
-                    System.out.println("other's avatar " + othersAvatar);
-                    System.out.println("other's " + cmd);
-
                     Image ava = new Image(othersAvatar);
                     avatar.setImage(ava);
                     avatar.setFitWidth(32);
