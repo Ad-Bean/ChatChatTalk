@@ -15,7 +15,6 @@ public class MySqlConnection {
     static{
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            System.out.println("连接数据库");
             connection = DriverManager.getConnection(url, databaseUser, databasePassword);
             statement = connection.createStatement();
         } catch (Exception e){

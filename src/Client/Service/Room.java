@@ -195,32 +195,34 @@ public class Room extends Thread implements Initializable {
     }
 
     public void setProfile() {
-        for (User user : users) {
-            if (Controller.username.equalsIgnoreCase(user.username)) {
-                nickName.setText(user.nickName);
-                nickName.setOpacity(1);
-                userName.setText(user.username);
-                userName.setOpacity(1);
-                email.setText(user.email);
-                email.setOpacity(1);
-                phoneNo.setText(user.phone);
-                gender.setText(user.gender);
-                Image image;
-                if (user.gender.equals("Male")) {
-                    image = new Image("Assets/male.png");
-                } else {
-                    image = new Image("Assets/female.png");
+        try{
+            ResultSet resultSet = MySqlFunction.findUserbyUsername("user_info", Controller.username);
+            if(resultSet.next()) {
+                    nickName.setText(resultSet.getString("nickName"));
+                    nickName.setOpacity(1);
+                    userName.setText(resultSet.getString("username"));
+                    userName.setOpacity(1);
+                    email.setText(resultSet.getString("email"));
+                    email.setOpacity(1);
+                    phoneNo.setText(resultSet.getString("phone"));
+                    gender.setText(resultSet.getString("gender"));
+                    Image image;
+                    if (resultSet.getString("gender").equals("Male")) {
+                        image = new Image("Assets/male.png");
+                    } else {
+                        image = new Image("Assets/female.png");
+                    }
+                    genderImage.setImage(image);
                 }
-                genderImage.setImage(image);
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        }
     }
+
 
     public void handleSendEvent(MouseEvent event) {
         send();
-//        for(User user : users) {
-//            System.out.println(user.username);
-//        }
+
     }
 
 
@@ -247,9 +249,6 @@ public class Room extends Thread implements Initializable {
         avatar.setFitWidth(32);
         avatar.setFitHeight(32);
         testRoom.getChildren().addAll(time, avatar, me);
-//        if (msg.equalsIgnoreCase("BYE") || (msg.equalsIgnoreCase("logout"))) {
-//            System.exit(0);
-//        }
     }
 
     public void chooseImageButton(ActionEvent event) {
@@ -271,21 +270,9 @@ public class Room extends Thread implements Initializable {
         if (saveControl) {
             try {
                 BufferedImage bufferedImage = ImageIO.read(filePath);
-//                try{
-                        String[] temp = fileChoosePath.getText().split("Avatar\\\\");
-                        String icon = temp[temp.length - 1];
-                        MySqlFunction.updateUserIcon(Controller.username, icon);
-//                } catch (SQLException e){
-//                    e.printStackTrace();
-//                }
-//                for(User user : users){
-//                    if(user.nickName.equals(Controller.username)){
-//                        String[] temp = fileChoosePath.getText().split("Avatar\\\\");
-//                        user.icon = temp[temp.length - 1];
-//                        UserDataService.saveAllRegisteredUsers(users);
-//                        break;
-//                    }
-//                }
+                String[] temp = fileChoosePath.getText().split("Avatar\\\\");
+                String icon = temp[temp.length - 1];
+                MySqlFunction.updateUserIcon(Controller.username, icon);
                 Image image = SwingFXUtils.toFXImage(bufferedImage, null);
                 proImage.setImage(image);
                 showProPic.setFill(new ImagePattern(image));
@@ -310,13 +297,6 @@ public class Room extends Thread implements Initializable {
         } catch (SQLException e){
             e.printStackTrace();
         }
-//        for(User user : users){
-//            if(user.nickName.equals(Controller.username) && user.icon != null){
-//                System.out.println(user.icon);
-//                image = new Image(path + user.icon, false);
-//                break;
-//            }
-//        }
         proImage.setImage(image);
         showProPic.setFill(new ImagePattern(image));
         clientName.setText(Controller.nickname);
