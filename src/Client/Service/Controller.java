@@ -130,7 +130,7 @@ public class Controller {
 
     private boolean checkUser(String username) {
         try{
-            ResultSet resultSet = MySqlFunction.findUserbyUsername("user_info", username);
+            ResultSet resultSet = MySqlFunction.findUserByUsername("user_info", username);
             return !resultSet.next();
         } catch (SQLException e){
             e.printStackTrace();
@@ -140,7 +140,7 @@ public class Controller {
 
     private boolean checkEmail(String email) {
         try{
-            ResultSet resultSet = MySqlFunction.findUserbyEmail("user_info", email);
+            ResultSet resultSet = MySqlFunction.findUserByEmail("user_info", email);
             return !resultSet.next();
         } catch (SQLException e){
             e.printStackTrace();
@@ -167,17 +167,17 @@ public class Controller {
 
         User loginUser = new User();
         try{
-            ResultSet resultSet = MySqlFunction.findUserbyUsernameAndPassword("user_info", username, password);
+            ResultSet resultSet = MySqlFunction.findUserByUsernameAndPassword("user_info", username, password);
             if(resultSet.next()){
                 loginUser.icon = resultSet.getString("icon");
                 loginUser.nickName = resultSet.getString("nickName");
-                loginUser.username = resultSet.getString("icon");
-                loginUser.password = resultSet.getString("icon");
+                loginUser.username = resultSet.getString("username");
+                loginUser.password = resultSet.getString("password");
                 loginUser.email = resultSet.getString("email");
                 loginUser.gender = resultSet.getString("gender");
                 loginUser.phone = resultSet.getString("phone");
                 loginState = true;
-                nickname = loginUser.username;
+                nickname = loginUser.nickName;
             }
         } catch (SQLException e){
             e.printStackTrace();
@@ -185,7 +185,7 @@ public class Controller {
 
         // check if already login
         try{
-            ResultSet resultSet = MySqlFunction.findUserbyUsername("online_user", loginUser.username);
+            ResultSet resultSet = MySqlFunction.findUserByUsername("online_user", loginUser.username);
             if(resultSet.next()){
                 loginState = false;
                 loginNotifier.setText("This user has already login!");

@@ -134,11 +134,17 @@ public class Room extends Thread implements Initializable {
                     ImageView avatar = new ImageView();
                     String othersAvatar = Controller.avatar;
 
-                    for (User onlineUser : users) {
-                        if (cmd.equals(onlineUser.nickName + ":") && !cmd.equals(Controller.nickname + ":")) {
-                            othersAvatar = onlineUser.icon;
+                    try{
+                        String[] sender = cmd.split(":");
+                        ResultSet resultSet = MySqlFunction.findUserByNickName("user_info", sender[0]);
+                        if(resultSet.next()){
+                            System.out.println(resultSet.getString("icon"));
+                            othersAvatar = resultSet.getString("icon");
                         }
+                    } catch (SQLException e){
+                        e.printStackTrace();
                     }
+
                     System.out.println("other's avatar " + othersAvatar);
                     System.out.println("other's " + cmd);
 
@@ -195,27 +201,28 @@ public class Room extends Thread implements Initializable {
 
     public void setProfile() {
         try{
-            ResultSet resultSet = MySqlFunction.findUserbyUsername("user_info", Controller.username);
+            ResultSet resultSet = MySqlFunction.findUserByUsername("user_info", Controller.username);
             if(resultSet.next()) {
-                    nickName.setText(resultSet.getString("nickName"));
-                    nickName.setOpacity(1);
-                    userName.setText(resultSet.getString("username"));
-                    userName.setOpacity(1);
-                    email.setText(resultSet.getString("email"));
-                    email.setOpacity(1);
-                    phoneNo.setText(resultSet.getString("phone"));
-                    gender.setText(resultSet.getString("gender"));
-                    Image image;
-                    if (resultSet.getString("gender").equals("Male")) {
-                        image = new Image("Assets/male.png");
-                    } else {
-                        image = new Image("Assets/female.png");
-                    }
-                    genderImage.setImage(image);
+                clientName.setText(Controller.nickname);
+                nickName.setText(resultSet.getString("nickName"));
+                nickName.setOpacity(1);
+                userName.setText(resultSet.getString("username"));
+                userName.setOpacity(1);
+                email.setText(resultSet.getString("email"));
+                email.setOpacity(1);
+                phoneNo.setText(resultSet.getString("phone"));
+                gender.setText(resultSet.getString("gender"));
+                Image image;
+                if (resultSet.getString("gender").equals("Male")) {
+                    image = new Image("Assets/male.png");
+                } else {
+                    image = new Image("Assets/female.png");
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
+                genderImage.setImage(image);
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -288,7 +295,7 @@ public class Room extends Thread implements Initializable {
         showProPic.setStroke(Color.valueOf("#90a4ae"));
         Image image = new Image("Assets/Avatar/1.png", false);
         try{
-            ResultSet resultSet = MySqlFunction.findUserbyUsername("user_info", Controller.username);
+            ResultSet resultSet = MySqlFunction.findUserByUsername("user_info", Controller.username);
             if(resultSet.next()){
                 image = new Image(resultSet.getString("icon"));
             }

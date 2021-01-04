@@ -6,7 +6,7 @@ import Client.Model.User;
 import Database.MySqlConnection;
 
 public class MySqlFunction {
-    public static ResultSet findUserbyUsername(String dataSheet, String username){
+    public static ResultSet findUserByUsername(String dataSheet, String username){
         ResultSet resultSet;
         try{
             String sql = "SELECT * FROM "+ dataSheet +" WHERE username = \""+ username +"\"";
@@ -18,7 +18,19 @@ public class MySqlFunction {
         return null;
     }
 
-    public static ResultSet findUserbyEmail(String dataSheet, String email){
+    public static ResultSet findUserByNickName(String dataSheet, String nickName){
+        ResultSet resultSet;
+        try{
+            String sql = "SELECT * FROM "+ dataSheet +" WHERE nickName = \""+ nickName +"\"";
+            resultSet = MySqlConnection.statement.executeQuery(sql);
+            return resultSet;
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static ResultSet findUserByEmail(String dataSheet, String email){
         ResultSet resultSet;
         try{
             String sql = "SELECT * FROM "+ dataSheet +" WHERE email = \""+ email +"\"";
@@ -30,7 +42,7 @@ public class MySqlFunction {
         return null;
     }
 
-    public static ResultSet findUserbyUsernameAndPassword(String dataSheet, String username, String password){
+    public static ResultSet findUserByUsernameAndPassword(String dataSheet, String username, String password){
         ResultSet resultSet;
         try{
             String sql = "SELECT * FROM "+ dataSheet +" WHERE username = \""+ username +"\" AND password = \""+ password + "\"";
