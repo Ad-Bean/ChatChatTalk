@@ -88,8 +88,6 @@ public class Controller {
                         newUser.gender = "Female";
                     }
                     MySqlFunction.addUserToRegisterSheet(newUser);
-//                    users.add(newUser);
-//                    UserDataService.saveAllRegisteredUsers(users);
                     goBack.setOpacity(1);
                     success.setOpacity(1);
                     makeDefault();
@@ -131,13 +129,6 @@ public class Controller {
     }
 
     private boolean checkUser(String username) {
-//        users = UserDataService.loadAllRegisteredUsers();
-//        for (User user : users) {
-//            if (user.username.equalsIgnoreCase(username)) {
-//                return false;
-//            }
-//        }
-//        return true;
         try{
             ResultSet resultSet = MySqlFunction.findUserbyUsername("user_info", username);
             return !resultSet.next();
@@ -148,13 +139,6 @@ public class Controller {
     }
 
     private boolean checkEmail(String email) {
-//        users = UserDataService.loadAllRegisteredUsers();
-//        for (User user : users) {
-//            if (user.email.equalsIgnoreCase(email)) {
-//                return false;
-//            }
-//        }
-//        return true;
         try{
             ResultSet resultSet = MySqlFunction.findUserbyEmail("user_info", email);
             return !resultSet.next();
@@ -176,8 +160,6 @@ public class Controller {
 
 
     public void login() {
-//        users = UserDataService.loadAllRegisteredUsers();
-//        loggedInUser = UserDataService.loadAllOnlineUsers();
         username = userName.getText();
         password = passWord.getText();
         boolean loginState = false;

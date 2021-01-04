@@ -35,7 +35,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 import static Client.Service.Controller.users;
@@ -288,11 +287,10 @@ public class Room extends Thread implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         showProPic.setStroke(Color.valueOf("#90a4ae"));
         Image image = new Image("Assets/Avatar/1.png", false);
-        String path = "Assets/Avatar/";
         try{
             ResultSet resultSet = MySqlFunction.findUserbyUsername("user_info", Controller.username);
             if(resultSet.next()){
-                image = new Image(path + resultSet.getString("icon"));
+                image = new Image(resultSet.getString("icon"));
             }
         } catch (SQLException e){
             e.printStackTrace();
