@@ -19,7 +19,7 @@ public class Server extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("UI/Server.fxml"));
-        primaryStage.getIcons().add(new Image("Assets/wechat.png"));
+        primaryStage.getIcons().add(new Image("Assets/monitor.png"));
         primaryStage.setTitle("ChatChatTalk-Server");
         primaryStage.setScene(new Scene(root, 480, 240));
         primaryStage.setResizable(false);
