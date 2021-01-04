@@ -274,7 +274,7 @@ public class Room extends Thread implements Initializable {
                 BufferedImage bufferedImage = ImageIO.read(filePath);
                 String[] temp = fileChoosePath.getText().split("Avatar\\\\");
                 String icon = temp[temp.length - 1];
-                MySqlFunction.updateUserIcon(Controller.username, icon);
+                MySqlFunction.updateUserIcon(Controller.username, "Assets/Avatar/" + icon);
                 Image image = SwingFXUtils.toFXImage(bufferedImage, null);
                 proImage.setImage(image);
                 showProPic.setFill(new ImagePattern(image));
@@ -293,7 +293,8 @@ public class Room extends Thread implements Initializable {
         try{
             ResultSet resultSet = MySqlFunction.findUserByUsername("user_info", Controller.username);
             if(resultSet.next()){
-                image = new Image(resultSet.getString("icon"));
+                System.out.println(resultSet.getString("icon"));
+                image = new Image(resultSet.getString("icon"), false);
             }
         } catch (SQLException e){
             e.printStackTrace();
