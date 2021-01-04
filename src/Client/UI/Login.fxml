@@ -138,12 +138,12 @@
                         <Image url="@../../Assets/password.png" />
                      </image>
                   </ImageView>
-                  <TextField fx:id="userName" layoutX="100.0" layoutY="350.0" prefHeight="48.0" prefWidth="360.0" promptText="Username" style="-fx-background-color: #ffffff; -fx-focus-color: transparent;" styleClass="txtFont" stylesheets="@../../Stylesheets/style.css">
+                  <TextField fx:id="userName" layoutX="100.0" layoutY="350.0" onKeyPressed="#handleEnterLogin" prefHeight="48.0" prefWidth="360.0" promptText="Username" style="-fx-background-color: #ffffff; -fx-focus-color: transparent;" styleClass="txtFont" stylesheets="@../../Stylesheets/style.css">
                      <font>
                         <Font name="Arial" size="24.0" />
                      </font>
                   </TextField>
-                  <PasswordField fx:id="passWord" layoutX="100.0" layoutY="460.0" prefHeight="48.0" prefWidth="360.0" promptText="Password" style="-fx-background-color: #ffffff;" styleClass="txtFont" stylesheets="@../../Stylesheets/style.css">
+                  <PasswordField fx:id="passWord" layoutX="100.0" layoutY="460.0" onKeyPressed="#handleEnterLogin" prefHeight="48.0" prefWidth="360.0" promptText="Password" style="-fx-background-color: #ffffff;" styleClass="txtFont" stylesheets="@../../Stylesheets/style.css">
                      <font>
                         <Font name="Arial" size="24.0" />
                      </font>
