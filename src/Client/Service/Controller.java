@@ -17,8 +17,10 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
-
+import Database.MySqlFunction;
 
 public class Controller {
     @FXML
@@ -82,8 +84,9 @@ public class Controller {
                     } else {
                         newUser.gender = "Female";
                     }
-                    users.add(newUser);
-                    UserDataService.saveAllRegisteredUsers(users);
+                    MySqlFunction.addUserToRegisterSheet(newUser);
+//                    users.add(newUser);
+//                    UserDataService.saveAllRegisteredUsers(users);
                     goBack.setOpacity(1);
                     success.setOpacity(1);
                     makeDefault();
@@ -125,21 +128,35 @@ public class Controller {
     }
 
     private boolean checkUser(String username) {
-        users = UserDataService.loadAllRegisteredUsers();
-        for (User user : users) {
-            if (user.username.equalsIgnoreCase(username)) {
-                return false;
-            }
+//        users = UserDataService.loadAllRegisteredUsers();
+//        for (User user : users) {
+//            if (user.username.equalsIgnoreCase(username)) {
+//                return false;
+//            }
+//        }
+//        return true;
+        try{
+            ResultSet resultSet = MySqlFunction.findUserbyUsername("user_info", username);
+            return !resultSet.next();
+        } catch (SQLException e){
+            e.printStackTrace();
         }
         return true;
     }
 
     private boolean checkEmail(String email) {
-        users = UserDataService.loadAllRegisteredUsers();
-        for (User user : users) {
-            if (user.email.equalsIgnoreCase(email)) {
-                return false;
-            }
+//        users = UserDataService.loadAllRegisteredUsers();
+//        for (User user : users) {
+//            if (user.email.equalsIgnoreCase(email)) {
+//                return false;
+//            }
+//        }
+//        return true;
+        try{
+            ResultSet resultSet = MySqlFunction.findUserbyEmail("user_info", email);
+            return !resultSet.next();
+        } catch (SQLException e){
+            e.printStackTrace();
         }
         return true;
     }
@@ -156,35 +173,45 @@ public class Controller {
 
 
     public void login() {
-        users = UserDataService.loadAllRegisteredUsers();
-        loggedInUser = UserDataService.loadAllOnlineUsers();
+//        users = UserDataService.loadAllRegisteredUsers();
+//        loggedInUser = UserDataService.loadAllOnlineUsers();
         username = userName.getText();
         password = passWord.getText();
         boolean loginState = false;
         loginNotifier.setText("Username or password is incorrect!");
 
         User loginUser = new User();
-        for (User x : users) {
-            if (x.username.equalsIgnoreCase(username) && x.password.equalsIgnoreCase(password)) {
+        try{
+            ResultSet resultSet = MySqlFunction.findUserbyUsernameAndPassword("user_info", username, password);
+            if(resultSet.next()){
+                loginUser.icon = resultSet.getString("icon");
+                loginUser.nickName = resultSet.getString("nickName");
+                loginUser.username = resultSet.getString("icon");
+                loginUser.password = resultSet.getString("icon");
+                loginUser.email = resultSet.getString("email");
+                loginUser.gender = resultSet.getString("gender");
+                loginUser.phone = resultSet.getString("phone");
                 loginState = true;
-                nickname = x.nickName;
-                loginUser = x;
-                break;
+                nickname = loginUser.username;
             }
+        } catch (SQLException e){
+            e.printStackTrace();
         }
+
         // check if already login
-        for (User logged : loggedInUser) {
-            if (logged.username.equals(username) && loginState) {
+        try{
+            ResultSet resultSet = MySqlFunction.findUserbyUsername("online_user", loginUser.username);
+            if(resultSet.next()){
                 loginState = false;
                 System.out.println("This user has already login!");
                 loginNotifier.setText("This user has already login!");
-                break;
             }
+        } catch (SQLException e){
+            e.printStackTrace();
         }
 
         if (loginState) {
-            loggedInUser.add(loginUser);
-            UserDataService.saveAllOnlineUsers(loggedInUser);
+            MySqlFunction.addUserToOnlineSheet(username);
             System.out.println(loginUser.username);
             gender = loginUser.gender;
             changeWindow();
@@ -194,13 +221,7 @@ public class Controller {
     }
 
     public void logout(){
-        for(User logged : loggedInUser){
-            if(logged.nickName.equals(username)){
-                loggedInUser.remove(logged);
-                break;
-            }
-        }
-        UserDataService.saveAllOnlineUsers(loggedInUser);
+        MySqlFunction.removeUserFromSheetByUsername("online_user", username);
     }
 
     public void changeWindow() {
