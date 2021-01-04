@@ -77,9 +77,8 @@ public class Room extends Thread implements Initializable {
 
     private FileChooser fileChooser;
     private File filePath;
-    public boolean toggleChat = false, toggleProfile = false;
     // Changing profile picture
-    public boolean saveControl = false;
+    public boolean toggleChat = false, toggleProfile = false, saveControl = false;
     BufferedReader reader;
     PrintWriter writer;
     Socket socket;
@@ -103,16 +102,16 @@ public class Room extends Thread implements Initializable {
                 String msg = reader.readLine();
                 String[] tokens = msg.split(" ");
                 String cmd = tokens[0];
-                System.out.println(cmd);
+//                System.out.println(cmd);
                 StringBuilder fullMsg = new StringBuilder();
                 for (int i = 1; i < tokens.length; i++) {
                     fullMsg.append(tokens[i]);
                 }
-                System.out.println(fullMsg);
-                // Dont send messages to me
+                // System.out.println(fullMsg);
+                // Dont send messages to user itself
                 if (cmd.equalsIgnoreCase(Controller.nickname + ":")) {
                     continue;
-                } else if (fullMsg.toString().equalsIgnoreCase("bye")) {
+                } else if (fullMsg.toString().equalsIgnoreCase("exit")) {
                     break;
                 }
 
@@ -131,12 +130,21 @@ public class Room extends Thread implements Initializable {
                     others.setText(msg + "\n");
 
                     ImageView avatar = new ImageView();
+                    String othersAvatar = Controller.avatar;
 
-                    avatar.setImage(proImage.getImage());
+                    for (User onlineUser : users) {
+                        if (cmd.equals(onlineUser.nickName + ":") && !cmd.equals(Controller.nickname + ":")) {
+                            othersAvatar = onlineUser.icon;
+                        }
+                    }
+                    System.out.println("other's avatar " + othersAvatar);
+                    System.out.println("other's " + cmd);
+
+                    Image ava = new Image(othersAvatar);
+                    avatar.setImage(ava);
                     avatar.setFitWidth(32);
                     avatar.setFitHeight(32);
-
-                    testRoom.getChildren().addAll(time, others);
+                    testRoom.getChildren().addAll(time, avatar, others);
                 });
             }
             reader.close();
@@ -260,8 +268,8 @@ public class Room extends Thread implements Initializable {
         if (saveControl) {
             try {
                 BufferedImage bufferedImage = ImageIO.read(filePath);
-                for(User user : users){
-                    if(user.nickName.equals(Controller.username)){
+                for (User user : users) {
+                    if (user.nickName.equals(Controller.username)) {
                         String[] temp = fileChoosePath.getText().split("Avatar\\\\");
                         user.icon = temp[temp.length - 1];
                         UserDataService.saveAllRegisteredUsers(users);
@@ -282,15 +290,15 @@ public class Room extends Thread implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         showProPic.setStroke(Color.valueOf("#90a4ae"));
-        Image image = new Image("Assets/Avatar/1.png", false);
-        String path = "Assets/Avatar/";
-        for(User user : users){
-            if(user.nickName.equals(Controller.username) && user.icon != null){
-                System.out.println(user.icon);
-                image = new Image(path + user.icon, false);
+        String ava = Controller.avatar;
+        Image image = new Image(ava, false);
+        for (User user : users) {
+            if (user.nickName.equals(Controller.username) && user.icon != null) {
+                image = new Image(user.icon, false);
                 break;
             }
         }
+
         proImage.setImage(image);
         showProPic.setFill(new ImagePattern(image));
         clientName.setText(Controller.nickname);
