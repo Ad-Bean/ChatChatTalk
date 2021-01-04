@@ -21,6 +21,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import Database.MySqlFunction;
+import java.util.Random;
+
 
 public class Controller {
     @FXML
@@ -63,17 +65,18 @@ public class Controller {
     public Label nameExists;
     @FXML
     public Label checkEmail;
-    public static String username, password, gender, nickname;
+    public static String username, password, gender, nickname, avatar;
     public static List<User> loggedInUser = null;
     public static List<User> users = null;
 
     public void registration() {
         if (!regUsername.getText().equalsIgnoreCase("") && !regPass.getText().equalsIgnoreCase("") && !regEmail.getText().equalsIgnoreCase("") && !regNickName.getText().equalsIgnoreCase("") && !regPhoneNo.getText().equalsIgnoreCase("") && (male.isSelected() || female.isSelected())) {
-            // if username is already in use
+            // if username is already in users
             if (checkUser(regUsername.getText())) {
                 if (checkEmail(regEmail.getText())) {
                     User newUser = new User();
-                    newUser.icon = "1.png";
+                    Random random = new Random();
+                    newUser.icon = "Assets/Avatar/" + (random.nextInt(32) + 1) + ".png";
                     newUser.username = regUsername.getText();
                     newUser.password = regPass.getText();
                     newUser.email = regEmail.getText();
@@ -203,7 +206,6 @@ public class Controller {
             ResultSet resultSet = MySqlFunction.findUserbyUsername("online_user", loginUser.username);
             if(resultSet.next()){
                 loginState = false;
-                System.out.println("This user has already login!");
                 loginNotifier.setText("This user has already login!");
             }
         } catch (SQLException e){
