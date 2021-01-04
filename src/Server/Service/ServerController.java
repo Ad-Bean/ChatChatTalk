@@ -62,13 +62,13 @@ public class ServerController {
                 try {
                     while (resultSet.next()) {
                         users += "\t{\n";
-                        users += "\t\t\"icon\":\"" + resultSet.getString("icon") + "\",\n";
-                        users += "\t\t\"nickName\":\"" + resultSet.getString("nickName") + "\",\n";
-                        users += "\t\t\"username\":\"" + resultSet.getString("username") + "\",\n";
-                        users += "\t\t\"password\":\"" + resultSet.getString("password") + "\",\n";
-                        users += "\t\t\"email\":\"" + resultSet.getString("email") + "\",\n";
-                        users += "\t\t\"gender\":\"" + resultSet.getString("gender") + "\",\n";
-                        users += "\t\t\"phone\":\"" + resultSet.getString("phone") + "\"\n";
+                        users += "\t\t\"icon\": \"" + resultSet.getString("icon") + "\",\n";
+                        users += "\t\t\"nickName\": \"" + resultSet.getString("nickName") + "\",\n";
+                        users += "\t\t\"username\": \"" + resultSet.getString("username") + "\",\n";
+                        users += "\t\t\"password\": \"" + resultSet.getString("password") + "\",\n";
+                        users += "\t\t\"email\": \"" + resultSet.getString("email") + "\",\n";
+                        users += "\t\t\"gender\": \"" + resultSet.getString("gender") + "\",\n";
+                        users += "\t\t\"phone\": \"" + resultSet.getString("phone") + "\"\n";
                         users += "\t},\n";
                     }
                     users = users.substring(0, users.length() - 2);
