@@ -76,6 +76,8 @@ public class Room extends Thread implements Initializable {
     private TextFlow testRoom;
     @FXML
     private ScrollPane scrollPane;
+    @FXML
+    private ImageView sendBtn;
 
     private FileChooser fileChooser;
     private File filePath;
@@ -104,12 +106,10 @@ public class Room extends Thread implements Initializable {
                 String msg = reader.readLine();
                 String[] tokens = msg.split(" ");
                 String cmd = tokens[0];
-//                System.out.println(cmd);
                 StringBuilder fullMsg = new StringBuilder();
                 for (int i = 1; i < tokens.length; i++) {
                     fullMsg.append(tokens[i]);
                 }
-                // System.out.println(fullMsg);
                 // Dont send messages to user itself
                 if (cmd.equalsIgnoreCase(Controller.nickname + ":")) {
                     continue;
@@ -134,14 +134,13 @@ public class Room extends Thread implements Initializable {
                     ImageView avatar = new ImageView();
                     String othersAvatar = Controller.avatar;
 
-                    try{
+                    try {
                         String[] sender = cmd.split(":");
                         ResultSet resultSet = MySqlFunction.findUserByNickName("user_info", sender[0]);
-                        if(resultSet.next()){
-                            System.out.println(resultSet.getString("icon"));
+                        if (resultSet.next()) {
                             othersAvatar = resultSet.getString("icon");
                         }
-                    } catch (SQLException e){
+                    } catch (SQLException e) {
                         e.printStackTrace();
                     }
                     Image ava = new Image(othersAvatar);
@@ -196,9 +195,9 @@ public class Room extends Thread implements Initializable {
     }
 
     public void setProfile() {
-        try{
+        try {
             ResultSet resultSet = MySqlFunction.findUserByUsername("user_info", Controller.username);
-            if(resultSet.next()) {
+            if (resultSet.next()) {
                 clientName.setText(Controller.nickname);
                 nickName.setText(resultSet.getString("nickName"));
                 nickName.setOpacity(1);
@@ -224,12 +223,14 @@ public class Room extends Thread implements Initializable {
 
     public void handleSendEvent(MouseEvent event) {
         send();
-
     }
 
 
     public void send() {
         String msg = msgField.getText();
+        if (msg == null || msg.length() == 0) {
+            return;
+        }
         writer.println(Controller.nickname + ": " + msg);
 
         msgField.setText("");
@@ -290,13 +291,13 @@ public class Room extends Thread implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         showProPic.setStroke(Color.valueOf("#90a4ae"));
         Image image = new Image("Assets/Avatar/1.png", false);
-        try{
+        try {
             ResultSet resultSet = MySqlFunction.findUserByUsername("user_info", Controller.username);
-            if(resultSet.next()){
-                System.out.println(resultSet.getString("icon"));
+            assert resultSet != null;
+            if (resultSet.next()) {
                 image = new Image(resultSet.getString("icon"), false);
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         proImage.setImage(image);

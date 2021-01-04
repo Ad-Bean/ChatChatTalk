@@ -66,7 +66,6 @@ public class Controller {
     @FXML
     public Label checkEmail;
     public static String username, password, gender, nickname, avatar;
-    public static List<User> loggedInUser = null;
     public static List<User> users = null;
 
     public void registration() {
@@ -196,7 +195,7 @@ public class Controller {
 
         if (loginState) {
             MySqlFunction.addUserToOnlineSheet(username);
-            System.out.println(loginUser.username);
+            System.out.println(loginUser.username + " login!");
             gender = loginUser.gender;
             changeWindow();
         } else {

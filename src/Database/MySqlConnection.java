@@ -7,8 +7,8 @@ import java.sql.DriverManager;
 public class MySqlConnection {
     private static Connection connection;
     private static String url = "jdbc:mysql://localhost:3306/test?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
-    private static String databaseUser = "Amou";
-    private static String databasePassword = "hwh123456";
+    private static String databaseUser = "root";
+    private static String databasePassword = "";
 
     public static Statement statement = null;
 

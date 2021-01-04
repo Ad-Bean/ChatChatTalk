@@ -139,7 +139,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </ImageView>
-                        <ImageView fitHeight="42.0" fitWidth="63.0" layoutX="744.0" layoutY="11.0" onMouseClicked="#handleSendEvent" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="sendBtn" fitHeight="42.0" fitWidth="63.0" layoutX="744.0" layoutY="11.0" onMouseClicked="#handleSendEvent" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../Assets/icons8-sent.png" />
                            </image>
