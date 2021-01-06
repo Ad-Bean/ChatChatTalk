@@ -1,0 +1,38 @@
+[
+	{
+		"icon": "Assets/Avatar/16.png",
+		"nickName": "a",
+		"username": "a",
+		"password": "a",
+		"email": "a",
+		"gender": "Male",
+		"phone": "a"
+	},
+	{
+		"icon": "Assets/Avatar/1.png",
+		"nickName": "cc_admin",
+		"username": "admin",
+		"password": "admin",
+		"email": "admin@outlook.com",
+		"gender": "Male",
+		"phone": "18888888888"
+	},
+	{
+		"icon": "Assets/Avatar/5.png",
+		"nickName": "test_user1",
+		"username": "user1",
+		"password": "user1",
+		"email": "user1@outlook.com",
+		"gender": "Male",
+		"phone": "19999999999"
+	},
+	{
+		"icon": "Assets/Avatar/C:UsersAdbeaPicturesQQ截图20200920200103.png",
+		"nickName": "test_user2",
+		"username": "user2",
+		"password": "user2",
+		"email": "user2@outlook.com",
+		"gender": "Male",
+		"phone": "1000000000"
+	}
+]

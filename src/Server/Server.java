@@ -2,13 +2,11 @@ package Server;
 
 import Server.Service.ClientHandler;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -37,7 +35,6 @@ public class Server extends Application {
         Socket socket;
         new Thread(()-> launch(args)).start();
         try {
-//            launch(args);
             System.out.println("Starting server...");
             serverSocket = new ServerSocket(8000);
             while (true) {
